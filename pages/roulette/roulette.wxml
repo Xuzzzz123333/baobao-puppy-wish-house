@@ -1,0 +1,63 @@
+<view class="page roulette-page" style="padding-top: {{safeTop}}px">
+  <view class="roulette-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">DINNER ROULETTE</view>
+      <view class="page-title">今晚吃什么</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="mode-row">
+    <view
+      wx:for="{{modes}}"
+      wx:key="id"
+      class="mode-pill {{mode === item.id ? 'active' : ''}}"
+      data-mode="{{item.id}}"
+      bindtap="chooseMode"
+    >{{item.name}}</view>
+  </view>
+  <view class="source-note">{{sourceText}}</view>
+
+  <view class="wheel-stage">
+    <view class="pointer">▼</view>
+    <view
+      class="wheel {{spinning ? 'spinning' : ''}}"
+      style="transform: rotate({{rotation}}deg); background: {{wheelBackground}}"
+    >
+      <view class="wheel-center">♥</view>
+      <view
+        wx:for="{{wheelDishes}}"
+        wx:key="id"
+        class="wheel-label"
+        style="{{item.labelStyle}}"
+      >
+        <text class="wheel-icon">{{item.icon}}</text>
+        <text class="wheel-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="spin-button {{spinning ? 'disabled' : ''}}" bindtap="spin">
+    {{spinning ? '正在替你们决定…' : '转一下'}}
+  </view>
+
+  <view class="result-card" wx:if="{{resultDish}}">
+    <view class="result-label">今晚就吃</view>
+    <view class="result-main">
+      <view class="result-icon" style="background: {{resultDish.tone}}">
+        <image wx:if="{{resultDish.imageUrl}}" src="{{resultDish.imageUrl}}" mode="aspectFill" />
+        <text wx:else>{{resultDish.icon}}</text>
+      </view>
+      <view class="result-copy">
+        <view class="result-name">{{resultDish.name}}</view>
+        <view class="result-sub">{{resultDish.subtitle}}</view>
+      </view>
+      <view class="result-price">¥{{resultDish.price}}</view>
+    </view>
+    <view class="result-actions">
+      <view class="again-button" bindtap="spinAgain">再转一次</view>
+      <view class="add-button" bindtap="addResult">加入今晚菜单</view>
+    </view>
+  </view>
+</view>

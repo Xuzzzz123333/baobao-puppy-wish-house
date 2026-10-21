@@ -1,0 +1,132 @@
+<view class="page occasions-page" style="padding-top: {{safeTop}}px">
+  <view class="occasions-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">SPECIAL DINNER</view>
+      <view class="page-title">纪念日与惊喜</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="occasion-hero">
+    <view class="hero-heart">♥</view>
+    <view class="hero-title">
+      <view>给平常的一顿饭</view>
+      <view>加一个值得记住的理由</view>
+    </view>
+    <view class="hero-sub">纪念日菜单双方立即可见；惊喜晚餐会在设定时间才向另一半揭晓。</view>
+    <view class="create-button" bindtap="openEditor">＋ 新建特别晚餐</view>
+  </view>
+
+  <view class="pair-tip" wx:if="{{!paired}}">绑定另一半后才能创建双方共享的纪念日与惊喜。</view>
+  <view class="loading" wx:if="{{loading}}">正在查看特别安排…</view>
+
+  <view class="occasion-list" wx:else>
+    <view
+      wx:for="{{occasions}}"
+      wx:key="id"
+      class="occasion-card {{item.locked ? 'locked' : ''}}"
+    >
+      <view class="occasion-top">
+        <view class="type-chip type-{{item.type}}">{{item.typeText}}</view>
+        <view class="occasion-date">{{item.dateText}}</view>
+      </view>
+      <view class="locked-mark" wx:if="{{item.locked}}">🔒</view>
+      <view class="occasion-title">{{item.title}}</view>
+      <view class="occasion-reveal">{{item.revealText}}</view>
+      <view class="occasion-menu" wx:if="{{!item.locked}}">
+        <view class="occasion-icons">{{item.icons}}</view>
+        <view class="occasion-dishes">{{item.dishNames}}</view>
+      </view>
+      <view class="locked-copy" wx:else>菜单内容被大厨好好藏着，到时间再一起揭晓。</view>
+      <view
+        class="delete-occasion"
+        wx:if="{{item.own}}"
+        data-id="{{item.id}}"
+        catchtap="deleteOccasion"
+      >删除安排</view>
+    </view>
+    <view class="occasion-empty" wx:if="{{!occasions.length}}">
+      还没有特别晚餐。可以从下一次纪念日，或者一个普通但想制造惊喜的晚上开始。
+    </view>
+  </view>
+</view>
+
+<view class="editor-mask" wx:if="{{showEditor}}" bindtap="closeEditor">
+  <view class="editor-panel" catchtap="noop">
+    <view class="editor-head">
+      <view>
+        <view class="editor-eyebrow">CREATE A MOMENT</view>
+        <view class="editor-title">新建特别晚餐</view>
+      </view>
+      <view class="close-button" bindtap="closeEditor">×</view>
+    </view>
+
+    <scroll-view class="editor-scroll" scroll-y>
+      <view class="type-row">
+        <view
+          class="type-option {{type === 'anniversary' ? 'active' : ''}}"
+          data-type="anniversary"
+          bindtap="chooseType"
+        >
+          <view class="type-icon">♥</view>
+          <view class="type-name">纪念日菜单</view>
+          <view class="type-desc">保存后双方可见</view>
+        </view>
+        <view
+          class="type-option {{type === 'surprise' ? 'active surprise' : ''}}"
+          data-type="surprise"
+          bindtap="chooseType"
+        >
+          <view class="type-icon">✦</view>
+          <view class="type-name">惊喜晚餐</view>
+          <view class="type-desc">到时间才揭晓</view>
+        </view>
+      </view>
+
+      <view class="field-label">这顿饭的名字</view>
+      <input
+        class="field-input"
+        maxlength="20"
+        value="{{title}}"
+        placeholder="例如：在一起第 1000 天"
+        bindinput="onTitleInput"
+      />
+
+      <view class="field-row">
+        <view class="field-half">
+          <view class="field-label">晚餐日期</view>
+          <picker mode="date" value="{{date}}" bindchange="onDateChange">
+            <view class="field-input picker-value">{{date}}</view>
+          </picker>
+        </view>
+        <view class="field-half" wx:if="{{type === 'surprise'}}">
+          <view class="field-label">揭晓时间</view>
+          <picker mode="time" value="{{revealTime}}" bindchange="onTimeChange">
+            <view class="field-input picker-value">{{revealTime}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="field-label">选择菜单</view>
+      <view class="dish-grid">
+        <view
+          wx:for="{{dishes}}"
+          wx:key="id"
+          class="dish-option {{item.selected ? 'selected' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="toggleDish"
+        >
+          <view class="dish-icon">{{item.icon}}</view>
+          <view class="dish-name">{{item.name}}</view>
+          <view class="dish-check">{{item.selected ? '✓' : '＋'}}</view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="save-button" bindtap="saveOccasion">
+      {{saving ? '正在保存…' : (type === 'surprise' ? '悄悄藏好这份惊喜' : '保存纪念日菜单')}}
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

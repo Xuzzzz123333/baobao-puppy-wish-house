@@ -1,0 +1,15 @@
+<view wx:if="{{!hidden}}" class="tab-wrap">
+  <view class="tab-bar">
+    <view
+      wx:for="{{list}}"
+      wx:key="pagePath"
+      class="tab-item {{selected === index ? 'active' : ''}}"
+      data-path="{{item.pagePath}}"
+      bindtap="switchTab"
+    >
+      <view class="tab-icon-wrap"><text class="tab-icon">{{item.icon}}</text><text wx:if="{{index === 2 && unread}}" class="tab-badge">{{unread > 9 ? '9+' : unread}}</text></view>
+      <text class="tab-text">{{item.text}}</text>
+    </view>
+  </view>
+  <view class="safe-bottom"></view>
+</view>

@@ -1,0 +1,15 @@
+{
+  "pages": ["pages/index/index", "pages/menu/menu", "pages/matches/matches", "pages/us/us", "pages/privacy/privacy", "pages/daily/daily", "pages/inbox/inbox"],
+  "window": { "navigationStyle": "custom", "backgroundColor": "#FFF8EE", "backgroundTextStyle": "dark" },
+  "tabBar": {
+    "custom": true, "color": "#A09387", "selectedColor": "#B96542", "backgroundColor": "#FFFDF8",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "小店" },
+      { "pagePath": "pages/menu/menu", "text": "点心愿" },
+      { "pagePath": "pages/matches/matches", "text": "小纸条" },
+      { "pagePath": "pages/us/us", "text": "我们" }
+    ]
+  },
+  "usingComponents": { "demo-panel":"/components/demo-panel/index", "inbox-banner":"/components/inbox-banner/index", "notification-settings":"/components/notification-settings/index" },
+  "style": "v2", "lazyCodeLoading": "requiredComponents", "sitemapLocation": "sitemap.json"
+}

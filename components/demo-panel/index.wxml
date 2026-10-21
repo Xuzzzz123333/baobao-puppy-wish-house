@@ -1,0 +1,1 @@
+<view wx:if="{{enabled}}" class="demo-panel"><view class="demo-title">单账号演示 · 当前扮演{{roleLabel}}</view><view class="demo-caption">数据只保存在本机。切换身份，看看另一半会收到什么。</view><view class="demo-actions"><button class="demo-switch" bindtap="switchRole">切换成{{nextRoleLabel}}</button><button bindtap="exit">退出演示</button></view></view>

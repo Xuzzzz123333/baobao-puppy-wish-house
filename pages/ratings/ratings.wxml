@@ -1,0 +1,106 @@
+<view class="page ratings-page" style="padding-top: {{safeTop}}px">
+  <view class="ratings-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">DINNER MEMORIES</view>
+      <view class="page-title">用餐评分</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="rating-hero">
+    <view>
+      <view class="hero-label">已经留下</view>
+      <view class="hero-count">{{ratingCount}} <text>次评分</text></view>
+    </view>
+    <view class="hero-copy">
+      <view>每一次认真吃饭</view>
+      <view>都会变成情侣最爱榜</view>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">正在整理你们喜欢的味道…</view>
+
+  <block wx:else>
+    <view class="section-head">
+      <view>
+        <view class="section-title">待评分的晚餐</view>
+        <view class="section-note">订单完成后，双方都可以独立评分</view>
+      </view>
+      <view class="pending-count">{{pendingOrders.length}} 份</view>
+    </view>
+
+    <view class="pending-list" wx:if="{{pendingOrders.length}}">
+      <view
+        wx:for="{{pendingOrders}}"
+        wx:key="id"
+        class="pending-card"
+        data-id="{{item.id}}"
+        bindtap="openRating"
+      >
+        <view class="pending-icon">{{item.icon}}</view>
+        <view class="pending-copy">
+          <view class="pending-title">{{item.dateText}}的晚餐</view>
+          <view class="pending-detail">{{item.itemSummary}}</view>
+        </view>
+        <view class="rate-button">去评分</view>
+      </view>
+    </view>
+    <view class="empty-pending" wx:else>暂时没有待评分订单，大厨标记“已完成”后会出现在这里。</view>
+
+    <view class="section-head board-head">
+      <view>
+        <view class="section-title">情侣最爱榜</view>
+        <view class="section-note">根据双方真实用餐评分生成</view>
+      </view>
+    </view>
+
+    <view class="leaderboard" wx:if="{{leaderboard.length}}">
+      <view wx:for="{{leaderboard}}" wx:key="id" class="board-item">
+        <view class="rank rank-{{item.rank}}">{{item.rank}}</view>
+        <view class="board-icon">
+          <image wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" mode="aspectFill" />
+          <text wx:else>{{item.icon}}</text>
+        </view>
+        <view class="board-copy">
+          <view class="board-name">{{item.name}}</view>
+          <view class="board-meta">{{item.ratingCount}} 次真实评分</view>
+        </view>
+        <view class="board-score">♥ {{item.scoreText}}</view>
+      </view>
+    </view>
+    <view class="empty-board" wx:else>
+      完成第一顿晚餐并评分后，最爱榜就会从这里开始生长。
+    </view>
+  </block>
+</view>
+
+<view class="rating-mask" wx:if="{{showRating}}" bindtap="closeRating">
+  <view class="rating-panel" catchtap="noop">
+    <view class="rating-label">RATE THIS DINNER</view>
+    <view class="rating-title">{{activeOrder.dateText}}的晚餐</view>
+    <view class="rating-dishes">{{activeOrder.itemSummary}}</view>
+    <view class="stars">
+      <view
+        wx:for="{{stars}}"
+        wx:key="*this"
+        class="star {{score >= item ? 'active' : ''}}"
+        data-score="{{item}}"
+        bindtap="chooseScore"
+      >♥</view>
+    </view>
+    <view class="score-copy">{{score}} 分 · {{score >= 5 ? '想一直吃下去' : (score >= 4 ? '今晚很好吃' : '下次可以更好')}}</view>
+    <textarea
+      class="comment-input"
+      maxlength="60"
+      value="{{comment}}"
+      placeholder="写一句今晚的感受（选填）"
+      bindinput="onCommentInput"
+    />
+    <view class="submit-rating" bindtap="submitRating">
+      {{saving ? '正在保存…' : '保存评分'}}
+    </view>
+    <view class="cancel-rating" bindtap="closeRating">稍后再评</view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

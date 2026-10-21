@@ -1,0 +1,26 @@
+.DS_Store
+node_modules/
+miniprogram_npm/
+cloudfunctions/**/node_modules/
+.idea/
+.vscode/
+*.log
+
+# Local WeChat project identity (contains the real AppID).
+project.config.json
+project.private.config.json
+
+# Local cloud and subscription-message credentials.
+config/cloud.private.js
+config/notifications.private.js
+cloudfunctions/notifyPartnerOrder/config.private.js
+.env
+.env.*
+!.env.example
+
+# Developer Tools previews, QR codes and local QA captures.
+phone-preview-qr.png
+preview-info.json
+preview.html
+preview.png
+wechat-*.png

@@ -1,0 +1,262 @@
+.order-page {
+  min-height: 100vh;
+  padding-bottom: 60rpx;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-button,
+.header-space {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72rpx;
+  height: 72rpx;
+}
+
+.back-button {
+  border: 1rpx solid rgba(32, 35, 31, 0.09);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 32rpx;
+}
+
+.order-header .page-title,
+.order-header .eyebrow {
+  text-align: center;
+}
+
+.order-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32rpx;
+  padding: 30rpx;
+  border-radius: 34rpx;
+  background: #20231f;
+  color: #fff;
+}
+
+.summary-label {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 20rpx;
+}
+
+.summary-count {
+  margin-top: 5rpx;
+  font-size: 46rpx;
+  font-weight: 800;
+}
+
+.summary-count text {
+  font-size: 20rpx;
+}
+
+.pending-chip {
+  padding: 10rpx 15rpx;
+  border-radius: 999rpx;
+  background: rgba(231, 91, 67, 0.2);
+  color: #f2a496;
+  font-size: 19rpx;
+  font-weight: 700;
+}
+
+.pending-chip.calm {
+  background: rgba(130, 148, 116, 0.2);
+  color: #c6d8b9;
+}
+
+.loading {
+  padding: 80rpx 0;
+  color: #969087;
+  text-align: center;
+}
+
+.section-title {
+  margin: 38rpx 2rpx 18rpx;
+  font-size: 29rpx;
+  font-weight: 800;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.order-card {
+  padding: 24rpx;
+  border: 1rpx solid rgba(32, 35, 31, 0.07);
+  border-radius: 30rpx;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.order-top,
+.order-bottom,
+.notes-line,
+.budget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-user {
+  font-size: 26rpx;
+  font-weight: 750;
+}
+
+.order-date {
+  margin-top: 6rpx;
+  color: #99938a;
+  font-size: 18rpx;
+}
+
+.status-chip {
+  padding: 8rpx 13rpx;
+  border-radius: 999rpx;
+  background: #efebe5;
+  color: #777169;
+  font-size: 18rpx;
+  font-weight: 700;
+}
+
+.status-accepted,
+.status-preparing {
+  background: #f7e2da;
+  color: #b64e3b;
+}
+
+.status-ready {
+  background: #e3ecdd;
+  color: #5e7353;
+}
+
+.dish-summary {
+  margin-top: 22rpx;
+  color: #34322f;
+  font-size: 23rpx;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.notes-line {
+  margin-top: 15rpx;
+  padding: 14rpx 16rpx;
+  border-radius: 18rpx;
+  background: #f5f1eb;
+  color: #8d877e;
+  font-size: 19rpx;
+}
+
+.notes-line text:last-child {
+  color: #56524c;
+  font-weight: 650;
+}
+
+.order-bottom {
+  margin-top: 21rpx;
+}
+
+.budget {
+  flex-direction: column;
+  align-items: flex-start;
+  color: #989188;
+  font-size: 17rpx;
+}
+
+.budget-value {
+  margin-top: 3rpx;
+  color: #20231f;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.next-action {
+  min-width: 190rpx;
+  padding: 18rpx 21rpx;
+  border-radius: 21rpx;
+  background: #20231f;
+  color: #fff;
+  font-size: 21rpx;
+  font-weight: 700;
+  text-align: center;
+}
+
+.next-action.disabled {
+  opacity: 0.55;
+}
+
+.empty-orders,
+.access-card {
+  padding: 58rpx 30rpx;
+  border: 1rpx dashed rgba(32, 35, 31, 0.12);
+  border-radius: 30rpx;
+  text-align: center;
+}
+
+.empty-icon,
+.access-icon {
+  font-size: 54rpx;
+}
+
+.empty-title,
+.access-title {
+  margin-top: 13rpx;
+  font-size: 25rpx;
+  font-weight: 750;
+}
+
+.empty-sub,
+.access-sub {
+  margin-top: 8rpx;
+  color: #989188;
+  font-size: 20rpx;
+}
+
+.access-card {
+  margin-top: 34rpx;
+}
+
+.completed-title {
+  margin-top: 48rpx;
+}
+
+.completed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.completed-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 19rpx 21rpx;
+  border-radius: 23rpx;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.completed-name {
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.completed-detail {
+  max-width: 520rpx;
+  margin-top: 5rpx;
+  overflow: hidden;
+  color: #99938a;
+  font-size: 17rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.completed-mark {
+  color: #6f8061;
+  font-size: 28rpx;
+  font-weight: 800;
+}

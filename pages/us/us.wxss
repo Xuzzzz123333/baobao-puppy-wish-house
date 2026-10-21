@@ -1,0 +1,77 @@
+.us-page .page-title { font-size:45rpx; }
+.demo-entry { margin-top:25rpx; padding:26rpx; }
+.demo-entry .section-title { font-size:28rpx; }
+.demo-entry .page-sub { font-size:22rpx; }
+.demo-entry .secondary-button { margin-top:20rpx; }
+.couple-card { position:relative; overflow:hidden; margin-top:29rpx; padding:33rpx 28rpx 26rpx; border:1rpx solid #dbc3a5; border-radius:32rpx; background:#e9ddc6; text-align:center; }
+.couple-pattern { position:absolute; top:-65rpx; right:-8rpx; font-size:310rpx; line-height:1; color:rgba(139,104,61,.07); }
+.couple-avatars { position:relative; display:flex; justify-content:center; align-items:center; }
+.avatar { display:flex; justify-content:center; align-items:center; width:106rpx; height:106rpx; border:5rpx solid #e9ddc6; border-radius:50%; color:#fffaf0; font-size:33rpx; font-weight:650; }
+.owner-avatar { background:#b8805b; } .baby-avatar { background:#a4af86; }
+.join-heart { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; width:43rpx; height:43rpx; margin:0 -10rpx; border-radius:50%; background:#fff8e9; color:#be8058; font-size:29rpx; }
+.couple-names { position:relative; margin-top:20rpx; font-size:31rpx; font-weight:700; }
+.couple-caption { position:relative; margin-top:10rpx; color:#a08664; font-size:21rpx; line-height:1.6; }
+.invite-button { position:relative; display:flex; align-items:center; justify-content:space-between; gap:16rpx; width:100%; margin-top:25rpx; padding:22rpx; border:1rpx solid #d9c3a4; border-radius:21rpx; background:#f8efdc; color:#9c704b; font-size:23rpx; }
+.invite-meta { display:flex; justify-content:space-between; margin-top:14rpx; color:#a38d6e; font-size:19rpx; }
+.connected-label { margin-top:25rpx; padding:18rpx; border-radius:20rpx; background:#f4efdc; color:#8f9566; font-size:23rpx; }
+.stats-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13rpx; margin-top:22rpx; }
+.stat { display:flex; align-items:center; justify-content:center; flex-direction:column; min-height:132rpx; padding:18rpx 5rpx; border:1rpx solid #ede0ce; border-radius:25rpx; background:#fffdf8; text-align:center; }
+.stat.featured { background:#f6e2cf; }
+.stat-value { font-size:35rpx; font-weight:700; } .stat-value text { margin-left:5rpx; font-size:19rpx; }
+.stat-label { margin-top:10rpx; color:#ac957c; font-size:19rpx; }
+.status-dot { width:18rpx; height:18rpx; margin:11rpx 0 9rpx; border-radius:50%; background:#c8b59a; }
+.status-dot.online { background:#99a87b; box-shadow:0 0 0 9rpx #f1f4e9; }
+.retry-link { margin-top:7rpx; color:#b96542; font-size:20rpx; }
+.account-card { margin-top:25rpx; padding:26rpx; }
+.account-card .section-title { font-size:27rpx; }
+.account-card .page-sub { margin-top:7rpx; font-size:21rpx; }
+.account-row { display:flex; align-items:center; gap:13rpx; margin-top:18rpx; }
+.name-input { flex:1; min-width:0; height:78rpx; padding:0 20rpx; border:1rpx solid #eadfce; border-radius:22rpx; background:#fffaf1; font-size:23rpx; }
+.save-button { flex:none; display:flex; align-items:center; justify-content:center; min-width:106rpx; height:78rpx; border-radius:22rpx; background:#b96542; color:#fffaf0; font-size:23rpx; }
+.sage-button { background:#919d75; }
+.divider { height:1rpx; margin:28rpx 0; background:#eee4d6; }
+.role-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13rpx; margin-top:19rpx; }
+.role-card { position:relative; display:flex; align-items:center; gap:12rpx; min-height:113rpx; padding:18rpx 12rpx; border:2rpx solid #eee4d6; border-radius:24rpx; background:#faf5eb; text-align:left; }
+.role-card[disabled] { opacity:1; }
+.role-card.chosen { border-color:#bd845c; background:#f6e3cf; } .role-card.chosen.baby { border-color:#a3ac82; background:#eaf0dc; }
+.role-icon { font-size:34rpx; }
+.role-title { font-size:26rpx; font-weight:650; }
+.role-caption { margin-top:6rpx; color:#ac947a; font-size:17rpx; }
+.role-check { position:absolute; top:6rpx; right:12rpx; color:#a27851; font-size:22rpx; }
+.role-note { margin-top:17rpx; color:#b09a80; font-size:20rpx; line-height:1.7; }
+.code-input { letter-spacing:3rpx; }
+.our-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17rpx; }
+.couple-photo-card { position:relative; margin-top:25rpx; padding:29rpx; }
+.photo-card-mark { position:absolute; top:14rpx; right:26rpx; color:#d6b291; font-size:50rpx; }
+.couple-photo-card .section-title { padding-right:45rpx; font-size:28rpx; }
+.couple-photo-card .page-sub { font-size:22rpx; }
+.photo-card-actions { display:flex; gap:13rpx; margin-top:24rpx; }
+.photo-card-actions button { flex:1; min-width:0; font-size:23rpx; }
+.couple-photo-card .remove-photo { width:auto; margin-top:22rpx; color:#af8f73; font-size:21rpx; }
+.photo-card-note { margin-top:20rpx; color:#b5a087; font-size:19rpx; line-height:1.7; }
+.album-limit-row { display:flex; align-items:center; gap:12rpx; margin-top:22rpx; color:#af967b; font-size:21rpx; }
+.album-limit-row .album-limit { width:auto; margin:0; padding:12rpx 21rpx; border:1rpx solid #e7d9c3; border-radius:17rpx; color:#aa8b68; font-size:21rpx; line-height:1.5; }
+.album-limit-row .chosen { border-color:#b78259; background:#f2dfc7; color:#986844; }
+.album-limit-row .album-refresh { width:auto; margin:0 0 0 auto; padding:10rpx 3rpx; color:#b1845f; font-size:19rpx; }
+.album-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17rpx; margin-top:25rpx; }
+.album-tile { overflow:hidden; padding:9rpx 9rpx 13rpx; border:1rpx solid #e7d9c6; border-radius:19rpx; background:#fffaf1; }
+.album-image-wrap { position:relative; overflow:hidden; height:220rpx; border-radius:13rpx; background:#eee3d2; }
+.album-image { width:100%; height:100%; }
+.album-image-missing { padding-top:82rpx; color:#b39b7e; font-size:20rpx; text-align:center; }
+.album-number { position:absolute; bottom:10rpx; left:10rpx; padding:7rpx 12rpx; border-radius:12rpx; background:rgba(255,249,237,.88); color:#a2714f; font-size:18rpx; }
+.album-tile .album-caption { display:block; overflow:hidden; width:100%; min-height:65rpx; margin:0; padding:14rpx 6rpx; color:#a68b6e; font-size:20rpx; line-height:1.6; text-align:left; white-space:nowrap; text-overflow:ellipsis; }
+.album-tools { display:flex; flex-wrap:wrap; gap:9rpx; padding:0 5rpx; }
+.album-tools button { width:auto; margin:0; padding:9rpx 10rpx; border-radius:11rpx; background:#f0e6d5; color:#a48663; font-size:18rpx; line-height:1.5; }
+.album-tools .album-delete { margin-left:auto; color:#b57d63; background:#f7e7db; }
+.couple-photo-card .album-play-link { width:100%; margin-top:22rpx; color:#b3815c; font-size:22rpx; text-align:center; }
+.album-error { margin-top:20rpx; color:#b96542; font-size:22rpx; line-height:1.7; }
+.our-card { padding:25rpx; border-radius:25rpx; text-align:left; }
+.our-icon { font-size:37rpx; } .our-title { margin-top:17rpx; font-size:28rpx; font-weight:650; } .our-caption { margin-top:8rpx; color:#ac8d6f; font-size:20rpx; }
+.our-mail { display:flex; justify-content:space-between; gap:20rpx; width:100%; margin-top:19rpx; padding:27rpx; color:#9d7857; font-size:24rpx; }
+.privacy-links { display:flex; flex-wrap:wrap; gap:15rpx 28rpx; margin-top:32rpx; }
+.privacy-links button { color:#af9a83; font-size:20rpx; }
+.us-footnote { margin-top:29rpx; color:#baa58f; font-size:18rpx; line-height:1.8; text-align:center; }
+.letter-scroll { height:55vh; padding:10rpx 8rpx 24rpx; }
+.letter-stamp { margin-bottom:27rpx; color:#b96542; font-size:20rpx; letter-spacing:3rpx; }
+.letter-paragraph { margin-bottom:26rpx; color:#765c49; font-size:27rpx; line-height:1.95; }
+.letter-signature { margin:30rpx 0; color:#a57858; font-size:24rpx; line-height:1.8; text-align:right; }

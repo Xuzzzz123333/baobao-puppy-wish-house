@@ -1,0 +1,33 @@
+<view class="page notes-page" style="padding-top: {{safeTop}}px">
+  <demo-panel/>
+  <inbox-banner/>
+  <view class="section-link" bindtap="goInbox">✉ 查看最近动态与未读消息 →</view>
+  <view class="eyebrow">LET THE PUPPY DELIVER</view><view class="page-title">两个人的小纸条</view>
+  <view class="page-sub">一句想念出发，一份温柔抵达。</view>
+  <view class="notes-toolbar"><scroll-view scroll-x class="note-tabs"><view class="note-tabs-inner"><button wx:for="{{filters}}" wx:key="id" class="note-tab {{filter === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="chooseFilter">{{item.name}}</button></view></scroll-view><button class="refresh-button" bindtap="load" disabled="{{loading || busy}}" aria-label="刷新信箱">↻</button></view>
+  <view wx:if="{{error}}" class="error-card paper-card"><view>{{error}}</view><button bindtap="load">再试一次 →</button></view>
+  <view wx:elif="{{!paired && !loading}}" class="empty-mailbox paper-card"><image src="{{shop.avatar}}" mode="aspectFill"/><view class="section-title">小狗还在等另一位收信人</view><view class="page-sub">去交换专属暗号，把小店变成你们两个人的秘密基地。</view><button class="primary-button" bindtap="goUs">邀请另一半进店</button></view>
+  <block wx:else>
+    <view wx:for="{{visibleWishes}}" wx:key="id" class="note-card paper-card {{item.status === 'completed' ? 'memory-card' : ''}}" data-id="{{item.id}}" bindtap="openWish">
+      <view class="note-top"><text class="note-direction">{{item.isCreator ? '我寄出的心愿' : 'Ta 寄来的心愿'}}</text><text class="note-status status-{{item.status}}">{{item.statusText}}</text></view>
+      <view class="note-main"><text class="note-icon">{{item.icon}}</text><view><view class="note-title">{{item.title}}</view><view class="note-detail">{{item.detailText}}</view></view><text class="note-arrow">↗</text></view>
+      <view wx:if="{{item.note}}" class="note-message">“{{item.note}}”</view>
+      <view wx:if="{{item.lastReply}}" class="last-reply"><text>✉</text><text>{{item.lastReply.byCreator ? item.creatorName : item.recipientName}}：{{item.lastReply.message}}</text></view>
+      <view class="note-bottom"><text>{{item.when}} · {{item.dateText}}</text><text>{{item.status === 'completed' ? '小幸福已收藏 ♡' : '打开纸条 →'}}</text></view>
+    </view>
+    <view wx:if="{{!visibleWishes.length && !loading && !error}}" class="empty-state paper-card"><view class="empty-symbol">✉</view><view>{{filter === 'memories' ? '还没有收好的回忆小票。心愿被认真兑现并确认后，就会出现在这里。' : '信箱里还安安静静的。先寄出一个小愿望吧。'}}</view><button class="section-link" bindtap="goMenu">去点一个小心愿 →</button></view>
+    <button wx:if="{{hasMore}}" class="load-more" bindtap="loadMore" loading="{{loading}}">再看看更早的小纸条</button>
+  </block>
+  <view wx:if="{{loading}}" class="loading-text">小狗正在翻翻信箱…</view>
+  <view class="notes-footnote">打开页面或点右上方 ↻，看看有没有新回信。</view>
+</view>
+<view wx:if="{{selected}}" class="overlay" bindtap="closeSheet"><view class="sheet" catchtap="noop"><view class="sheet-grip"></view>
+  <view class="sheet-head"><view class="sheet-title">{{selected.icon}} {{selected.title}}</view><button class="close-button" disabled="{{busy}}" bindtap="closeSheet">×</button></view>
+  <scroll-view scroll-y class="note-detail-scroll">
+    <view class="detail-status">{{selected.statusText}}</view><view class="detail-route">{{selected.creatorName}} 写给 {{selected.recipientName}}</view>
+    <view class="detail-summary paper-card"><view wx:for="{{selected.details}}" wx:key="label">{{item.label}}：{{item.value}}</view><view>想在：{{selected.when}}</view><view wx:if="{{selected.note}}" class="detail-note">{{selected.note}}</view></view>
+    <view class="field-label">小纸条的往返</view>
+    <view wx:for="{{selected.timeline}}" wx:key="at" class="timeline-entry"><view class="timeline-dot"></view><view><view class="timeline-author">{{item.byCreator ? selected.creatorName : selected.recipientName}}<text>{{item.dateText}}</text></view><view class="timeline-message">{{item.message}}</view></view></view>
+    <block wx:if="{{selected.actions.length}}"><view class="field-label">给对方留一句话</view><textarea class="note-input" placeholder="写一句回应；想晚点陪伴的话，也可以商量时间。" value="{{message}}" bindinput="onMessage" maxlength="500" disabled="{{busy}}" cursor-spacing="24"/><view class="input-counter">{{message.length}} / 500</view><view class="action-grid"><button wx:for="{{selected.actions}}" wx:key="op" class="{{item.primary ? 'primary-button main-action' : 'secondary-button'}}" data-op="{{item.op}}" bindtap="act" disabled="{{busy}}" loading="{{busy && item.primary}}">{{item.text}}</button></view></block>
+  </scroll-view>
+</view></view>

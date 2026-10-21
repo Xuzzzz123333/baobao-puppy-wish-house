@@ -1,0 +1,75 @@
+<view class="page order-page" style="padding-top: {{safeTop}}px">
+  <view class="order-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">CHEF'S ORDERS</view>
+      <view class="page-title">大厨接单中心</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="order-summary">
+    <view>
+      <view class="summary-label">今晚待处理</view>
+      <view class="summary-count">{{activeOrders.length}} <text>单</text></view>
+    </view>
+    <view class="pending-chip" wx:if="{{pendingCount}}">{{pendingCount}} 单等待接受</view>
+    <view class="pending-chip calm" wx:else>都在安排中</view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">正在查看今晚的菜单…</view>
+
+  <view class="access-card" wx:elif="{{accessDenied}}">
+    <view class="access-icon">🔒</view>
+    <view class="access-title">这里是大厨专属区域</view>
+    <view class="access-sub">请先到“我们”选择大厨角色</view>
+  </view>
+
+  <block wx:else>
+    <view class="section-title">进行中的订单</view>
+    <view class="order-list" wx:if="{{activeOrders.length}}">
+      <view wx:for="{{activeOrders}}" wx:key="id" class="order-card">
+        <view class="order-top">
+          <view>
+            <view class="order-user">{{item.creatorNickname}}确认的菜单</view>
+            <view class="order-date">{{item.dateText}} · 预计 {{item.expectedDinnerTime}} 开饭</view>
+          </view>
+          <view class="status-chip status-{{item.status}}">{{item.statusText}}</view>
+        </view>
+        <view class="dish-summary">{{item.itemSummary}}</view>
+        <view class="notes-line">
+          <text>口味备注</text>
+          <text>{{item.notesText}}</text>
+        </view>
+        <view class="order-bottom">
+          <view class="budget">
+            <text>预计预算</text>
+            <text class="budget-value">¥{{item.total}}</text>
+          </view>
+          <view
+            class="next-action {{updatingId === item.id ? 'disabled' : ''}}"
+            data-id="{{item.id}}"
+            data-status="{{item.nextStatus}}"
+            bindtap="advanceOrder"
+          >{{updatingId === item.id ? '正在更新…' : item.nextAction}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty-orders" wx:else>
+      <view class="empty-icon">🍳</view>
+      <view class="empty-title">还没有新订单</view>
+      <view class="empty-sub">食客确认今晚菜单后，会立即出现在这里</view>
+    </view>
+
+    <view class="section-title completed-title" wx:if="{{completedOrders.length}}">已经完成</view>
+    <view class="completed-list">
+      <view wx:for="{{completedOrders}}" wx:key="id" class="completed-card">
+        <view>
+          <view class="completed-name">{{item.creatorNickname}}的菜单</view>
+          <view class="completed-detail">{{item.dateText}} · {{item.itemSummary}}</view>
+        </view>
+        <view class="completed-mark">✓</view>
+      </view>
+    </view>
+  </block>
+</view>

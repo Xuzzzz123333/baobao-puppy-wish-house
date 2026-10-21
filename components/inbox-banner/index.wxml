@@ -1,0 +1,1 @@
+<view wx:if="{{count && latest}}" class="new-mail" bindtap="goInbox"><view class="mail-icon">✉<text>{{count}}</text></view><view class="mail-copy"><view class="mail-title">{{latest.title}}</view><view class="mail-summary">{{latest.summary || '小狗有新消息要交给你。'}}</view></view><text class="mail-link">查看 →</text></view>

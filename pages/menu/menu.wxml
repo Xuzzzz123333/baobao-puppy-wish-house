@@ -1,0 +1,33 @@
+<view class="page menu-page" style="padding-top: {{safeTop}}px">
+  <demo-panel/>
+  <inbox-banner/>
+  <view class="eyebrow">LITTLE WISHES, BIG LOVE</view>
+  <view class="page-title">今天，想要什么呀？</view>
+  <view class="page-sub">{{total}} 个靠近彼此的小动作，也接住你自己的小愿望。</view>
+  <view class="search-box"><text>⌕</text><input placeholder="搜搜：抱抱、陪我、晚安…" value="{{search}}" bindinput="onSearch" confirm-type="search"/></view>
+  <scroll-view scroll-x class="category-scroll"><view class="category-row"><button wx:for="{{categories}}" wx:key="id" class="category-tab {{activeCategory === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="chooseCategory"><text class="category-icon">{{item.icon}}</text>{{item.name}}</button></view></scroll-view>
+  <view wx:if="{{hasDraft}}" class="draft-banner" bindtap="restoreDraft"><text>✎ 小狗替你收好了一张草稿</text><text>继续写 →</text></view>
+  <view class="wish-grid">
+    <button wx:for="{{visibleItems}}" wx:key="id" class="wish-card paper-card" data-id="{{item.id}}" bindtap="openWish">
+      <view class="wish-art {{item.color}}"><text>{{item.icon}}</text><text class="art-spark">✦</text></view>
+      <view class="wish-card-copy"><view class="wish-category">{{item.categoryName}}</view><view class="wish-title">{{item.title}}</view><view class="wish-description">{{item.description}}</view><view class="wish-card-bottom"><text>想要这个</text><text class="wish-plus">＋</text></view></view>
+    </button>
+  </view>
+  <view wx:if="{{!visibleItems.length}}" class="empty-state">暂时没搜到。换一个词，<text data-id="custom" bindtap="openWish" class="custom-link">或者写你自己的小愿望 →</text></view>
+  <view class="menu-footnote">每个心愿都可以商量，舒服的亲近最可爱。</view>
+</view>
+<view wx:if="{{selected}}" class="overlay" bindtap="closeSheet">
+  <view class="sheet composer-sheet" catchtap="noop"><view class="sheet-grip"></view>
+    <view class="sheet-head"><view class="sheet-title">{{selected.icon}} {{selected.title}}</view><button class="close-button" disabled="{{submitting}}" bindtap="closeSheet">×</button></view>
+    <scroll-view scroll-y class="composer-scroll">
+      <view class="composer-description">{{selected.description}}</view>
+      <view wx:for="{{optionGroups}}" wx:key="key" wx:for-item="group"><view class="field-label">{{group.label}}</view><view class="chip-row"><button wx:for="{{group.values}}" wx:key="*this" class="choice {{choices[group.key] === item ? 'active' : ''}}" data-key="{{group.key}}" data-value="{{item}}" bindtap="chooseOption" disabled="{{submitting}}">{{item}}</button></view></view>
+      <view class="field-label">想在什么时候</view><view class="chip-row"><button wx:for="{{timeOptions}}" wx:key="*this" class="choice {{when === item ? 'active' : ''}}" data-value="{{item}}" bindtap="chooseTime" disabled="{{submitting}}">{{item}}</button></view>
+      <view class="field-label">再偷偷说一句<text class="optional">{{selected.id === 'custom' ? '（写下你的愿望）' : '（选填）'}}</text></view>
+      <textarea class="note-input" placeholder="比如：今天有点累，见面的时候抱紧一点好吗？" value="{{note}}" bindinput="onNote" maxlength="500" disabled="{{submitting}}" adjust-position="{{true}}" cursor-spacing="24"/>
+      <view class="input-counter">{{note.length}} / 500</view>
+      <view class="send-hint">小纸条只送给已绑定的另一半。</view>
+    </scroll-view>
+    <view class="composer-footer"><button class="primary-button send-button" loading="{{submitting}}" disabled="{{submitting}}" bindtap="sendWish">{{submitting ? '小狗正在认真送信…' : '让小狗送过去 🐾'}}</button></view>
+  </view>
+</view>

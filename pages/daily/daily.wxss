@@ -1,0 +1,32 @@
+.daily-page { padding-bottom:calc(55rpx + env(safe-area-inset-bottom)); }
+.daily-header { display:flex; align-items:center; gap:18rpx; }
+.daily-header .daily-back { flex:none; width:64rpx; height:64rpx; margin:0; border-radius:50%; background:#f1e5d2; color:#9a7554; font-size:30rpx; line-height:64rpx; }
+.daily-header .eyebrow { font-size:16rpx; letter-spacing:2rpx; }
+.daily-page .page-title { margin-top:24rpx; font-size:43rpx; }
+.blind-card { overflow:hidden; margin-top:30rpx; padding:30rpx; border:1rpx solid #dbc596; border-radius:32rpx; background:#eee2bd; text-align:center; }
+.daily-kicker { color:#a48d63; font-size:19rpx; letter-spacing:2rpx; text-align:left; }
+.blind-gift { position:relative; margin:42rpx auto 25rpx; font-size:108rpx; }
+.blind-gift text { position:absolute; top:-15rpx; margin-left:15rpx; color:#bc8a5c; font-size:47rpx; transform:rotate(15deg); }
+.blind-title { color:#755333; font-size:33rpx; font-weight:700; }
+.blind-copy { margin:18rpx 5rpx 30rpx; color:#9c815d; font-size:24rpx; line-height:1.8; }
+.draw-icon { margin:31rpx 0 20rpx; font-size:85rpx; }
+.tiny-note { margin-top:18rpx; color:#b09a7d; font-size:20rpx; line-height:1.8; }
+.secret-card { margin-top:27rpx; padding:30rpx; }
+.secret-title { margin-top:25rpx; color:#73533f; font-size:33rpx; font-weight:700; line-height:1.6; }
+.secret-copy { margin-top:14rpx; color:#ae927b; font-size:23rpx; line-height:1.8; }
+.envelope-row { display:flex; align-items:center; gap:12rpx; margin:30rpx 0; }
+.envelope { flex:1; min-width:0; padding:23rpx 8rpx; border:1rpx dashed #e4d5c0; border-radius:24rpx; color:#9d8975; font-size:22rpx; text-align:center; }
+.envelope > text { display:block; margin-bottom:15rpx; font-size:57rpx; }
+.envelope.sealed { border:1rpx solid #debd9d; background:#f8e5d6; color:#a06e4d; }
+.envelope-status { margin-top:9rpx; color:#b6a28c; font-size:18rpx; }
+.envelope-heart { color:#bd8b65; font-size:35rpx; }
+.secret-input { height:210rpx; }
+.secret-card .primary-button { margin-top:22rpx; }
+.answer-paper { margin-top:25rpx; padding:25rpx; border:1rpx solid #e8d9c5; border-radius:23rpx; background:#fcf5e9; }
+.answer-author { color:#b08c69; font-size:20rpx; }
+.answer-text { margin-top:16rpx; color:#80624b; font-size:27rpx; line-height:1.9; white-space:pre-wrap; word-break:break-all; }
+.partner-answer { background:#eef0df; border-color:#dce0c5; }
+.waiting-note { margin-top:27rpx; padding:25rpx; border-radius:23rpx; background:#f3ede1; color:#aa9478; font-size:23rpx; line-height:1.8; }
+.secret-card .daily-refresh { width:100%; margin-top:27rpx; color:#b17f5e; font-size:22rpx; }
+.daily-error { margin-top:20rpx; color:#b96542; font-size:23rpx; line-height:1.7; }
+.daily-footnote { margin-top:30rpx; color:#baa58d; font-size:19rpx; text-align:center; line-height:1.8; }

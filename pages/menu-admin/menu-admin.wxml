@@ -1,0 +1,299 @@
+<view class="page admin-page" style="padding-top: {{safeTop}}px">
+  <view class="admin-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">CHEF'S TABLE</view>
+      <view class="page-title">菜单管理</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="admin-intro">
+    <view>
+      <view class="intro-title">今晚做什么，由大厨决定</view>
+      <view class="intro-sub">修改后会立即同步到食客的菜单</view>
+    </view>
+    <picker mode="time" value="{{expectedDinnerTime}}" bindchange="onDinnerTimeChange">
+      <view class="dinner-time">
+        <view class="dinner-time-label">预计开饭</view>
+        <view class="dinner-time-value">{{expectedDinnerTime}}</view>
+      </view>
+    </picker>
+  </view>
+
+  <view class="admin-actions">
+    <view class="add-button" bindtap="openCreate">
+      <text class="add-symbol">＋</text>
+      <text>添加一道菜</text>
+    </view>
+    <view class="sort-button {{sortMode ? 'active' : ''}}" bindtap="toggleSortMode">
+      {{sortMode ? '完成排序' : '拖动排序'}}
+    </view>
+  </view>
+
+  <view class="sort-tip" wx:if="{{sortMode}}">按住菜品卡片上下拖动，松手后自动保存</view>
+
+  <view class="loading" wx:if="{{loading}}">正在端上菜单…</view>
+
+  <movable-area
+    class="admin-list"
+    style="height: {{listHeight}}rpx"
+    wx:elif="{{dishes.length}}"
+  >
+    <movable-view
+      class="movable-dish {{draggingId === item.id ? 'dragging' : ''}}"
+      wx:for="{{dishes}}"
+      wx:key="id"
+      direction="vertical"
+      out-of-bounds="{{false}}"
+      disabled="{{!sortMode}}"
+      y="{{item.dragY}}"
+      data-id="{{item.id}}"
+      data-y="{{item.dragY}}"
+      bindtouchstart="onDragStart"
+      bindchange="onDragChange"
+      bindtouchend="onDragEnd"
+    >
+      <view class="admin-dish {{item.available === false ? 'unavailable' : ''}}">
+        <view class="dish-icon" style="background: {{item.tone}}">
+          <image wx:if="{{item.imageUrl}}" class="dish-image" src="{{item.imageUrl}}" mode="aspectFill" />
+          <text wx:else>{{item.icon}}</text>
+        </view>
+        <view class="dish-main">
+          <view class="dish-title-line">
+            <view class="dish-name">{{item.name}}</view>
+            <view class="dish-price">¥{{item.price}}</view>
+          </view>
+          <view class="dish-meta">
+            {{item.category}} · {{item.time}}
+            <text class="sold-text" wx:if="{{item.available === false}}"> · 暂停售罄</text>
+          </view>
+          <view class="dish-subtitle">
+            {{item.subtitle}} · {{item.ingredients.length ? item.ingredients.length + ' 样食材' : '待补食材'}}
+          </view>
+        </view>
+        <view class="drag-handle" wx:if="{{sortMode}}">☰</view>
+        <view class="dish-actions" wx:else>
+          <view class="mini-action" data-id="{{item.id}}" bindtap="toggleAvailable">
+            {{item.available === false ? '恢复' : '停售'}}
+          </view>
+          <view class="mini-action" data-id="{{item.id}}" bindtap="openEdit">编辑</view>
+          <view class="mini-action danger" data-id="{{item.id}}" bindtap="deleteDish">删除</view>
+        </view>
+      </view>
+    </movable-view>
+  </movable-area>
+  <view class="empty-menu" wx:else>
+    <view class="empty-icon">🍽️</view>
+    <view class="empty-title">菜单还是空的</view>
+    <view class="empty-sub">点击上方按钮添加第一道菜</view>
+  </view>
+</view>
+
+<view class="editor-mask" wx:if="{{showEditor}}" bindtap="closeEditor">
+  <view class="editor-panel" catchtap="noop">
+    <view class="editor-head">
+      <view>
+        <view class="editor-eyebrow">CHEF EDIT</view>
+        <view class="editor-title">{{editorTitle}}</view>
+      </view>
+      <view class="close-button" bindtap="closeEditor">×</view>
+    </view>
+
+    <scroll-view class="editor-scroll" scroll-y>
+      <view class="field-label">菜名</view>
+      <input
+        class="field-input"
+        value="{{form.name}}"
+        maxlength="20"
+        placeholder="例如：番茄慢炖牛腩"
+        data-field="name"
+        bindinput="onFormInput"
+      />
+
+      <view class="field-row">
+        <view class="field-half">
+          <view class="field-label">金额</view>
+          <input
+            class="field-input"
+            type="digit"
+            value="{{form.price}}"
+            placeholder="0.00"
+            data-field="price"
+            bindinput="onFormInput"
+          />
+        </view>
+        <view class="field-half">
+          <view class="field-label">菜品图标</view>
+          <input
+            class="field-input icon-input"
+            value="{{form.icon}}"
+            maxlength="4"
+            placeholder="🍽️"
+            data-field="icon"
+            bindinput="onFormInput"
+          />
+        </view>
+      </view>
+
+      <view class="field-label">菜品图片</view>
+      <view class="image-field">
+        <view class="image-preview" bindtap="chooseImage">
+          <image
+            wx:if="{{form.imageUrl}}"
+            class="image-preview-file"
+            src="{{form.imageUrl}}"
+            mode="aspectFill"
+          />
+          <view wx:else class="image-placeholder">
+            <view class="image-placeholder-icon">＋</view>
+            <view>相册或拍照</view>
+          </view>
+        </view>
+        <view class="image-copy">
+          <view class="image-copy-title">{{form.imageUrl ? '菜品图片已上传' : '上传原创菜品图片'}}</view>
+          <view class="image-copy-sub">建议正方形，图片小于 5MB</view>
+          <view class="remove-image" wx:if="{{form.imageUrl}}" bindtap="removeImage">移除图片</view>
+        </view>
+      </view>
+
+      <view class="field-label">分类</view>
+      <picker
+        mode="selector"
+        range="{{categories}}"
+        value="{{categoryIndex}}"
+        bindchange="onCategoryChange"
+      >
+        <view class="field-input picker-input">
+          <text>{{form.category}}</text>
+          <text>⌄</text>
+        </view>
+      </picker>
+
+      <view class="field-label">一句介绍</view>
+      <input
+        class="field-input"
+        value="{{form.subtitle}}"
+        maxlength="40"
+        placeholder="描述这道菜的口味"
+        data-field="subtitle"
+        bindinput="onFormInput"
+      />
+
+      <view class="availability-row">
+        <view>
+          <view class="field-label availability-label">立即供应</view>
+          <view class="availability-sub">关闭后食客仍能看到，但无法加入菜单</view>
+        </view>
+        <switch
+          checked="{{form.available}}"
+          color="#6F8061"
+          data-field="available"
+          bindchange="onFormInput"
+        />
+      </view>
+
+      <view class="field-label">预计时间</view>
+      <input
+        class="field-input"
+        value="{{form.time}}"
+        maxlength="10"
+        placeholder="例如：20 分钟"
+        data-field="time"
+        bindinput="onFormInput"
+      />
+
+      <view class="ingredient-section-head">
+        <view>
+          <view class="field-label ingredient-title">所需食材</view>
+          <view class="ingredient-help">按一份菜填写，确认订单后会按数量自动合并</view>
+        </view>
+        <view class="ingredient-add" bindtap="addIngredient">＋ 添加</view>
+      </view>
+
+      <view class="ingredient-empty" wx:if="{{!form.ingredients.length}}">
+        还没有食材。可以先保存，采购清单会提示大厨稍后补充。
+      </view>
+
+      <view
+        class="ingredient-editor"
+        wx:for="{{form.ingredients}}"
+        wx:key="id"
+        wx:for-item="ingredient"
+        wx:for-index="ingredientIndex"
+      >
+        <view class="ingredient-editor-head">
+          <text>食材 {{ingredientIndex + 1}}</text>
+          <view
+            class="ingredient-remove"
+            data-index="{{ingredientIndex}}"
+            bindtap="removeIngredient"
+          >删除</view>
+        </view>
+        <input
+          class="field-input"
+          placeholder="食材名称，例如：番茄"
+          maxlength="16"
+          value="{{ingredient.name}}"
+          data-index="{{ingredientIndex}}"
+          data-field="name"
+          bindinput="onIngredientInput"
+        />
+        <view class="ingredient-row">
+          <input
+            class="field-input ingredient-quantity {{ingredient.unit === '适量' ? 'disabled-input' : ''}}"
+            type="digit"
+            placeholder="{{ingredient.unit === '适量' ? '无需数量' : '数量'}}"
+            disabled="{{ingredient.unit === '适量'}}"
+            value="{{ingredient.quantity}}"
+            data-index="{{ingredientIndex}}"
+            data-field="quantity"
+            bindinput="onIngredientInput"
+          />
+          <picker
+            class="ingredient-picker"
+            range="{{ingredientUnits}}"
+            data-index="{{ingredientIndex}}"
+            bindchange="onIngredientUnitChange"
+          >
+            <view class="field-input picker-input">{{ingredient.unit}}⌄</view>
+          </picker>
+          <picker
+            class="ingredient-picker category-picker"
+            range="{{ingredientCategories}}"
+            data-index="{{ingredientIndex}}"
+            bindchange="onIngredientCategoryChange"
+          >
+            <view class="field-input picker-input">{{ingredient.category}}⌄</view>
+          </picker>
+        </view>
+        <input
+          class="field-input ingredient-note"
+          placeholder="备注（选填），例如：切小块"
+          maxlength="30"
+          value="{{ingredient.note}}"
+          data-index="{{ingredientIndex}}"
+          data-field="note"
+          bindinput="onIngredientInput"
+        />
+        <view class="ingredient-optional">
+          <view>
+            <view class="optional-title">可选食材</view>
+            <view class="optional-sub">缺少时不影响完成这道菜</view>
+          </view>
+          <switch
+            color="#6F8061"
+            checked="{{ingredient.optional}}"
+            data-index="{{ingredientIndex}}"
+            bindchange="onIngredientOptionalChange"
+          />
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="save-button {{saving ? 'disabled' : ''}}" bindtap="saveDish">
+      {{saving ? '正在保存…' : '保存到情侣菜单'}}
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

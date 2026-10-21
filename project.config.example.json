@@ -1,0 +1,136 @@
+{
+  "description": "宝宝的小狗心愿屋 · 双人心愿与小纸条",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "assets/baobao-dog-avatar.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/puppy-storefront-original.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/baobao-dog-avatar.prompt.txt",
+        "type": "file"
+      },
+      {
+        "value": "assets/puppy-storefront.prompt.txt",
+        "type": "file"
+      },
+      {
+        "value": "scripts",
+        "type": "folder"
+      },
+      {
+        "value": "pages/cart",
+        "type": "folder"
+      },
+      {
+        "value": "pages/menu-admin",
+        "type": "folder"
+      },
+      {
+        "value": "pages/occasions",
+        "type": "folder"
+      },
+      {
+        "value": "pages/order-center",
+        "type": "folder"
+      },
+      {
+        "value": "pages/ratings",
+        "type": "folder"
+      },
+      {
+        "value": "pages/roulette",
+        "type": "folder"
+      },
+      {
+        "value": "pages/shopping-list",
+        "type": "folder"
+      },
+      {
+        "value": "pages/weekly-plan",
+        "type": "folder"
+      },
+      {
+        "value": "assets/app-icon.png",
+        "type": "file"
+      },
+      {
+        "value": "phone-preview-qr.png",
+        "type": "file"
+      },
+      {
+        "value": "preview.png",
+        "type": "file"
+      },
+      {
+        "value": "wechat-account-cloud.png",
+        "type": "file"
+      },
+      {
+        "value": "wechat-cart-fixed.png",
+        "type": "file"
+      },
+      {
+        "value": "wechat-menu-fixed.png",
+        "type": "file"
+      },
+      {
+        "value": "wechat-role-selection.png",
+        "type": "file"
+      },
+      {
+        "value": "wechat-chef-menu-admin.png",
+        "type": "file"
+      },
+      {
+        "value": "wechat-phase2-admin.png",
+        "type": "file"
+      },
+      {
+        "value": "docs",
+        "type": "folder"
+      },
+      {
+        "value": "tests",
+        "type": "folder"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "compileHotReLoad": true,
+    "minifyWXML": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "libVersion": "3.7.12",
+  "appid": "touristappid",
+  "projectname": "baobao-puppy-wish-house",
+  "miniprogramRoot": "./",
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
+}

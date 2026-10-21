@@ -1,0 +1,13 @@
+<view class="notify-card">
+  <view class="notify-title">小狗帮你留意新消息</view>
+  <view class="notify-copy">进入小程序时，首页横幅和“小纸条”角标会告诉你另一半的新动态。</view>
+  <button class="notify-button" bindtap="goInbox">查看最近动态 →</button>
+  <view class="notify-divider"></view>
+  <view class="notify-title">微信服务通知 · {{loading ? '查看配置中' : (ready ? (enabled ? '已记录订阅' : '可以订阅') : '待配置')}}</view>
+  <view class="notify-copy">{{demo ? '演示提醒只在本机体验，不发送微信通知。' : (ready ? '接收方需要亲自同意。一次订阅用于一次心愿或回信提醒，想继续接收可再次订阅；实际送达以微信规则和权限为准。' : '添加可用的订阅消息模板后，才能向微信发送提醒。站内提醒照常使用。')}}</view>
+  <view wx:if="{{enabled}}" class="notify-copy">本店已记录待使用次数：{{credits}}（以微信实际授权为准）</view>
+  <view wx:if="{{error}}" class="notify-copy">{{error}}</view>
+  <button class="notify-button" bindtap="subscribe" disabled="{{loading || busy}}">{{error ? '重试读取配置' : (ready ? '订阅下一次心愿提醒' : '查看配置说明')}}</button>
+  <block wx:if="{{ready && !demo}}"><button class="notify-stop" bindtap="toggleTest">{{showTest ? '收起通知自检 ↑' : '通知接收自检 ↓'}}</button><block wx:if="{{showTest}}"><view class="notify-copy">先订阅，再给自己发一条测试通知，会使用一次订阅。请在微信“服务通知”确认接收。</view><button class="notify-test" bindtap="testNotification" disabled="{{loading || busy || !enabled || credits < 1}}">给自己发一条测试通知</button></block></block>
+  <button wx:if="{{enabled}}" class="notify-stop" bindtap="disable" disabled="{{busy}}">暂停本店的微信提醒</button>
+</view>

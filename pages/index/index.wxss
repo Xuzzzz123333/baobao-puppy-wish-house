@@ -1,0 +1,74 @@
+.home-title { margin-top:12rpx; font-size:43rpx; line-height:1.4; font-weight:750; letter-spacing:-1rpx; }
+.tiny-heart { margin-left:13rpx; color:#bf7753; font-size:39rpx; }
+.storefront { position:relative; margin-top:30rpx; overflow:hidden; border:2rpx solid #ddbea1; border-radius:32rpx; background:#f8e1c8; box-shadow:0 12rpx 0 #f2eadb; }
+.awning { display:flex; height:32rpx; background:#fff3de; }
+.awning-stripe { flex:1; border-radius:0 0 16rpx 16rpx; background:#cf815b; }
+.awning-stripe:nth-child(even) { background:#fff2db; }
+.shop-sign { position:absolute; top:53rpx; left:30rpx; z-index:2; padding:10rpx 21rpx; border:2rpx solid #c39164; border-radius:10rpx; background:#fff4dc; color:#835332; font-size:22rpx; font-weight:700; transform:rotate(-3deg); }
+.sign-paw { margin-left:14rpx; color:#c9825b; font-size:14rpx; }
+.store-inner { position:relative; display:flex; align-items:center; height:337rpx; overflow:hidden; }
+.store-copy { position:relative; z-index:1; width:52%; padding:75rpx 0 0 32rpx; }
+.open-pill { display:flex; align-items:center; gap:9rpx; color:#9c7155; font-size:19rpx; }
+.open-dot { width:10rpx; height:10rpx; border-radius:50%; background:#96a47a; }
+.store-headline { margin-top:13rpx; font-size:45rpx; font-weight:750; line-height:1.25; color:#754d33; }
+.store-small { margin-top:14rpx; font-size:18rpx; color:#a17b5a; }
+.store-scene { position:absolute; top:0; right:0; width:100%; height:100%; transform-origin:75% 80%; }
+.store-scene.wag { animation:puppy-wag .6s ease-in-out; }
+@keyframes puppy-wag { 0%,100% { transform:scale(1); } 50% { transform:scale(1.025); } }
+.dog-bubble { position:relative; z-index:2; display:flex; align-items:center; gap:12rpx; min-height:66rpx; margin:0 22rpx; padding:15rpx 20rpx; border:1rpx solid #ead1b7; border-radius:20rpx; background:#fff6e8; color:#8c664a; font-size:21rpx; line-height:1.5; }
+.bubble-paw { flex:none; font-size:27rpx; }
+.store-footer { display:flex; justify-content:space-between; padding:20rpx 28rpx; color:#a48061; font-size:18rpx; }
+.letter-link { color:#a25f3a; font-weight:650; }
+.weather-card { margin-top:38rpx; padding:26rpx; }
+.weather-top { display:flex; justify-content:space-between; align-items:center; }
+.weather-top .section-title { font-size:27rpx; }
+.weather-caption { margin-top:8rpx; color:#a18b77; font-size:21rpx; line-height:1.6; }
+.weather-spark { color:#c5a56d; font-size:42rpx; }
+.weather-top .weather-refresh { flex:none; width:auto; padding:12rpx; color:#ad7655; font-size:21rpx; }
+.weather-sync { margin-top:16rpx; color:#b29a81; font-size:19rpx; line-height:1.6; }
+.weather-time { margin-top:7rpx; color:#b7a58f; font-size:18rpx; line-height:1.6; }
+.weather-error { margin-top:15rpx; color:#b96542; font-size:21rpx; line-height:1.6; }
+.partner-weather { margin-top:24rpx; padding:22rpx; border-radius:23rpx; background:#f8f0e1; }
+.mood-small { color:#a0876c; font-size:20rpx; line-height:1.6; }
+.partner-weather-title { margin-top:9rpx; color:#7b5a40; font-size:29rpx; font-weight:650; }
+.mood-actions { display:flex; flex-wrap:wrap; gap:10rpx; margin-top:20rpx; }
+.mood-actions .mood-action { width:auto; margin:0; padding:15rpx 17rpx; border:1rpx solid #e8d5bd; border-radius:18rpx; background:#fffaf2; color:#9a704d; font-size:21rpx; line-height:1.5; }
+.mood-actions .responded { border-color:#bd845c; background:#efdcc3; }
+.mood-reply { display:flex; align-items:center; gap:15rpx; margin-top:22rpx; padding:21rpx; border-radius:23rpx; background:#eaf0dc; color:#7e8860; font-size:22rpx; line-height:1.8; }
+.mood-reply > text { flex:none; font-size:35rpx; }
+.weather-options { display:flex; gap:12rpx; margin-top:22rpx; }
+.weather-item { display:flex; flex:1; align-items:center; justify-content:center; gap:9rpx; padding:15rpx 2rpx; border:1rpx solid #eee4d6; border-radius:20rpx; color:#9c8773; font-size:21rpx; }
+.weather-item.selected { border-color:#c99465; background:#f5e7d1; color:#8b5b36; }
+.weather-icon { font-size:28rpx; }
+.weather-reply { display:flex; justify-content:space-between; gap:18rpx; margin-top:22rpx; padding:19rpx 0 0; border-top:1rpx dashed #e7d9c7; color:#917961; font-size:21rpx; line-height:1.6; }
+.weather-arrow { flex:none; color:#ac7450; }
+.quick-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17rpx; }
+.quick-card { position:relative; min-height:160rpx; padding:24rpx; border-radius:26rpx; text-align:left; }
+.quick-icon { position:absolute; top:21rpx; right:24rpx; color:#98775d; font-size:38rpx; }
+.quick-title { padding-top:36rpx; font-size:29rpx; font-weight:700; }
+.quick-sub { margin-top:8rpx; color:#987f6c; font-size:19rpx; line-height:1.6; }
+.mailbox { display:flex; align-items:center; gap:22rpx; margin-top:24rpx; padding:25rpx; }
+.mailbox-icon { display:flex; align-items:center; justify-content:center; width:80rpx; height:80rpx; border-radius:24rpx; background:#f2e4d1; color:#b57d55; font-size:42rpx; }
+.mailbox-copy { flex:1; }
+.mailbox .section-title { font-size:27rpx; }
+.home-footnote { margin-top:36rpx; color:#b5a38f; font-size:19rpx; text-align:center; }
+.home-footnote text { margin-left:10rpx; }
+.letter-scroll { height:53vh; padding:12rpx 8rpx 26rpx; }
+.letter-stamp { margin-bottom:32rpx; color:#b96542; font-size:20rpx; letter-spacing:3rpx; }
+.letter-paragraph { margin-bottom:27rpx; color:#765c49; font-size:27rpx; line-height:1.95; }
+.letter-signature { margin:32rpx 0 26rpx; color:#a57858; font-size:24rpx; line-height:1.8; text-align:right; }
+.photo-frame { overflow:hidden; min-height:250rpx; height:43vh; border:1rpx solid #ead9c4; border-radius:26rpx; background:#f5eadb; }
+.couple-photo { width:100%; height:100%; }
+.photo-swiper { width:100%; height:100%; }
+.photo-player { display:flex; align-items:center; justify-content:space-between; gap:12rpx; padding-top:18rpx; color:#b18b68; font-size:21rpx; }
+.photo-swipe-hint { color:#baa48e; font-size:18rpx; }
+.photo-player button { width:auto; margin:0; padding:11rpx 17rpx; border-radius:14rpx; background:#f0e1cc; color:#a97650; font-size:21rpx; }
+.daily-portal { display:flex; align-items:center; gap:22rpx; margin-top:27rpx; padding:27rpx; border-color:#e3d7b7; background:#f5edda; }
+.daily-portal-icon { display:flex; flex:none; align-items:center; justify-content:center; width:82rpx; height:82rpx; border-radius:25rpx; background:#e9ddbc; font-size:45rpx; }
+.daily-portal .section-title { font-size:29rpx; }
+.daily-portal .weather-caption { font-size:20rpx; }
+.daily-portal-arrow { margin-left:auto; color:#b29767; font-size:33rpx; }
+.photo-empty { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:22rpx; height:100%; padding:34rpx; color:#a88b6e; font-size:25rpx; line-height:1.8; text-align:center; }
+.photo-heart { color:#c99c79; font-size:85rpx; }
+.photo-caption { padding:20rpx 6rpx; color:#b0987d; font-size:21rpx; line-height:1.6; text-align:center; }
+.photo-sheet .photo-settings { width:100%; padding:22rpx 10rpx 0; color:#b37d55; font-size:22rpx; text-align:center; }

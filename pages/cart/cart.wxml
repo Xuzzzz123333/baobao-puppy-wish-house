@@ -1,0 +1,107 @@
+<view class="cart-page" style="padding-top: {{safeTop}}px">
+  <view class="cart-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view class="cart-heading">
+      <view class="cart-eyebrow">OUR DINNER</view>
+      <view class="cart-title">今晚的菜单</view>
+    </view>
+    <view class="clear-button" wx:if="{{items.length}}" bindtap="clearCart">清空</view>
+    <view class="header-placeholder" wx:else></view>
+  </view>
+
+  <view class="cart-content" wx:if="{{items.length}}">
+    <view class="table-card">
+      <view class="table-top">
+        <view class="table-badge">两人桌</view>
+      <view class="table-status"><text></text> {{syncLabel}}</view>
+      </view>
+      <view class="table-title">{{tableTitle}}</view>
+      <view class="table-meta">预计 {{expectedDinnerTime}} 开饭 · 共 {{count}} 份</view>
+    </view>
+
+    <view class="cart-list">
+      <view wx:for="{{items}}" wx:key="id" class="cart-item">
+        <view class="cart-food-icon" style="background: {{item.tone}}">
+          <image wx:if="{{item.imageUrl}}" class="cart-food-image" src="{{item.imageUrl}}" mode="aspectFill" />
+          <text wx:else>{{item.icon}}</text>
+        </view>
+        <view class="cart-food-copy">
+          <view class="cart-food-name">{{item.name}}</view>
+          <view class="cart-food-tag">{{item.tags[0]}} · {{item.time}}</view>
+          <view class="cart-food-price">¥{{item.subtotal}}</view>
+        </view>
+        <view class="cart-stepper">
+          <view class="step-control" data-id="{{item.id}}" bindtap="decrease">−</view>
+          <text>{{item.quantity}}</text>
+          <view class="step-control step-add" data-id="{{item.id}}" bindtap="add">＋</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="note-section">
+      <view class="note-title">口味备注</view>
+      <view class="note-chips">
+        <view
+          wx:for="{{notes}}"
+          wx:key="*this"
+          class="note-chip {{noteMap[item] ? 'active' : ''}}"
+          data-note="{{item}}"
+          bindtap="chooseNote"
+        >{{item}}</view>
+      </view>
+      <view class="selected-note-copy" wx:if="{{selectedNotes.length}}">
+        已选择：{{selectedNotesText}}
+      </view>
+    </view>
+
+    <view class="bill-card">
+      <view class="bill-line">
+        <text>预计预算</text>
+        <text>¥{{total}}</text>
+      </view>
+      <view class="bill-line">
+        <text>额外费用</text>
+        <text class="green">无</text>
+      </view>
+      <view class="bill-divider"></view>
+      <view class="bill-line total-line">
+        <text>合计</text>
+        <view><text class="total-currency">¥</text><text class="total-price">{{total}}</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-cart" wx:else>
+    <view class="empty-bowl">🥣</view>
+    <view class="empty-title">今晚的菜单还是空的</view>
+    <view class="empty-sub">去挑两道彼此都喜欢的菜吧</view>
+    <view class="primary-button empty-action" bindtap="goBack">继续点菜</view>
+  </view>
+
+  <view class="checkout-wrap" wx:if="{{items.length}}">
+    <view class="checkout-button" bindtap="submitOrder">
+      <view>
+        <text class="checkout-label">一起确认</text>
+        <text class="checkout-sub">保存你们今晚的共同菜单</text>
+      </view>
+      <view class="checkout-price">¥{{total}} <text>→</text></view>
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+
+  <view class="success-mask" wx:if="{{showSuccess}}">
+    <view class="success-card">
+      <view class="success-mark">✓</view>
+      <view class="success-title">今晚吃这个！</view>
+      <view class="success-copy">菜单已替你们记好，预计 {{expectedDinnerTime}} 开饭。</view>
+      <view class="notification-result">{{notificationText}}</view>
+      <view class="shopping-result">{{shoppingListText}}</view>
+      <view
+        class="shopping-action"
+        wx:if="{{shoppingListReady}}"
+        bindtap="openShoppingList"
+      >查看采购清单 →</view>
+      <view class="primary-button" bindtap="finishOrder">回到首页</view>
+    </view>
+  </view>
+</view>

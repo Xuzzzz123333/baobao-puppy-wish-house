@@ -1,0 +1,12 @@
+Generation mode: built-in image_gen tool
+Use: WeChat mini program avatar for 宝宝的小狗便利店
+Final asset: baobao-dog-avatar.png
+
+Use case: logo-brand.
+Asset type: A single finished square raster app avatar for a personal WeChat mini program named 宝宝的小狗便利店, a warm little shop for a couple to exchange wishes and affectionate notes. Generate the avatar itself, not a presentation or mockup.
+Scene/backdrop: Full-bleed, opaque, solid warm pale apricot cream background.
+Subject: One original adorable cream-colored floppy-eared puppy messenger, looking at the viewer. Large round head, slightly darker biscuit ears, tiny chocolate-brown nose, clear friendly eyes, subtle rosy cheeks, and a small warm burnt-orange neckerchief. The puppy gently holds a small ivory envelope with a single coral-red heart seal in its mouth. The envelope sits below the nose, leaving the eyes and expression completely visible.
+Style/medium: Charming professional hand-drawn 2D brand mascot illustration, soft rounded shapes, clean thick warm cocoa outlines, very restrained soft shading and subtle paper warmth. Cute, affectionate and tasteful, memorable silhouette, polished app-icon artwork.
+Composition/framing: Square 1:1 canvas, one centered large head-and-shoulders puppy, minimal supporting detail. Puppy and envelope together fill roughly 75 percent of the canvas. Keep important features comfortably inside the central circular crop-safe area, with generous safe space around the ears. Very readable at small avatar sizes.
+Color palette: Cream and biscuit fur, cocoa outlines, burnt-orange scarf, one coral heart accent. Strong enough contrast between the puppy and background.
+Constraints: No text, no letters, no watermark, no UI, no frame, no border, no outer rounded-square tile, no collage, no alternate versions, no photorealism, no 3D, no tiny decorative objects. A single complete original app avatar, opaque background.

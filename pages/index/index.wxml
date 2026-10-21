@@ -1,0 +1,45 @@
+<view class="page home-page" style="padding-top: {{safeTop}}px">
+  <demo-panel/>
+  <inbox-banner/>
+  <view class="eyebrow">A LITTLE SHOP, ALL FOR YOU</view>
+  <view class="home-title">{{shop.name}}<text class="tiny-heart">♡</text></view>
+  <view class="page-sub">{{greeting}}</view>
+  <view class="storefront">
+    <view class="awning"><view wx:for="{{awning}}" wx:key="*this" class="awning-stripe"></view></view>
+    <view class="shop-sign">只对宝宝营业<text class="sign-paw">●</text></view>
+    <view class="store-inner">
+      <view class="store-copy"><view class="open-pill"><text class="open-dot"></text>小狗今日值班</view><view class="store-headline"><view>亲密日常</view><view>今日上新</view></view><view class="store-small">抱抱 · 陪伴 · 一点点心动</view></view>
+      <image class="store-scene {{dogWag ? 'wag' : ''}}" src="{{shop.hero}}" mode="aspectFill" bindtap="petDog" aria-label="点小狗，看看我们的合照"/>
+    </view>
+    <view class="dog-bubble" bindtap="petDog"><text class="bubble-paw">🐾</text><text>{{dogMessage}}</text></view>
+    <view class="store-footer"><text>{{pairText}}</text><text class="letter-link" bindtap="openLetter">开店来信 ↗</text></view>
+  </view>
+  <view class="weather-card paper-card">
+    <view class="weather-top"><view><view class="section-title">今天，你心里是什么天气？</view><view class="weather-caption">晴雨都可以，让另一半陪着你。</view></view><button class="weather-refresh" bindtap="loadHome" disabled="{{homeLoading || moodSaving || reactionSaving}}">{{homeLoading ? '同步中' : '刷新 ↻'}}</button></view>
+    <view class="weather-options"><button wx:for="{{weather}}" wx:key="id" class="weather-item {{selectedWeather === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="chooseWeather" disabled="{{moodSaving || homeLoading || reactionSaving}}"><text class="weather-icon">{{item.icon}}</text><text>{{item.name}}</text></button></view>
+    <view class="weather-sync">{{weatherSyncHint}}</view>
+    <view wx:if="{{myMood.updatedText}}" class="weather-time">上次分享 · {{myMood.updatedText}}</view>
+    <view wx:if="{{homeError}}" class="weather-error" bindtap="loadHome">{{homeError}} · 点击重试</view>
+    <view wx:if="{{myMood.reply}}" class="mood-reply"><text>{{myMood.reply.icon}}</text><view><view class="mood-small">{{partnerName}} 回应了你的天气</view><view>{{myMood.reply.text}}</view></view></view>
+    <view wx:if="{{paired}}" class="partner-weather">
+      <view class="mood-small">{{partnerName}} 的心情天气</view>
+      <block wx:if="{{partnerMood}}"><view class="partner-weather-title">{{partnerMood.icon}} {{partnerMood.name}}</view><view class="weather-caption">{{partnerMood.text}}</view><view class="weather-time">上次分享 · {{partnerMood.updatedText}}</view><view class="mood-actions"><button wx:for="{{reactions}}" wx:key="id" class="mood-action {{partnerMood.reply.id === item.id ? 'responded' : ''}}" data-id="{{item.id}}" bindtap="reactToWeather" disabled="{{reactionSaving || moodSaving || homeLoading}}">{{item.icon}} {{item.label}}</button></view><view wx:if="{{partnerMood.reply}}" class="weather-sync">你已经回应：{{partnerMood.reply.label}}</view></block>
+      <view wx:else class="weather-caption">Ta 还没选天气，等一小会儿，也可以先送个心愿。</view>
+    </view>
+    <view class="weather-reply" bindtap="goWeatherWish"><text>{{weatherText}}</text><text class="weather-arrow">→</text></view>
+  </view>
+  <view class="daily-portal paper-card" bindtap="goDaily"><view class="daily-portal-icon">🎁</view><view><view class="section-title">拆一份今日心动</view><view class="weather-caption">一个盲盒小动作 · 两颗真心的小秘密</view></view><text class="daily-portal-arrow">↗</text></view>
+  <view class="section-head"><text class="section-title">今天，想被怎样爱着</text><text class="section-link" bindtap="goMenu">全部心愿 →</text></view>
+  <view class="quick-grid">
+    <button class="quick-card peach" data-category="close" bindtap="goMenu"><text class="quick-icon">♡</text><view class="quick-title">想要贴贴</view><view class="quick-sub">抱抱、亲亲、摸摸头</view></button>
+    <button class="quick-card blue" data-category="company" bindtap="goMenu"><text class="quick-icon">☁</text><view class="quick-title">陪我一会儿</view><view class="quick-sub">有你在，普通也很好</view></button>
+    <button class="quick-card sage" data-category="comfort" bindtap="goMenu"><text class="quick-icon">☂</text><view class="quick-title">今天想被哄</view><view class="quick-sub">先接住情绪，再慢慢说</view></button>
+    <button class="quick-card butter" data-category="distance" bindtap="goMenu"><text class="quick-icon">✉</text><view class="quick-title">隔空心动</view><view class="quick-sub">远一点，也能靠近一点</view></button>
+  </view>
+  <view class="mailbox paper-card" bindtap="goNotes"><view class="mailbox-icon">✉</view><view class="mailbox-copy"><view class="section-title">小狗信箱</view><view class="weather-caption">你的小心思，和 Ta 的认真回应</view></view><text>→</text></view>
+  <view class="home-footnote">小狗负责送信，我们负责好好相爱。<text>🐾</text></view>
+</view>
+<view wx:if="{{showLetter}}" class="overlay" bindtap="closeLetter"><view class="sheet letter-sheet" catchtap="noop"><view class="sheet-grip"></view><view class="sheet-head"><view class="sheet-title">给宝宝的一封开店信</view><button class="close-button" bindtap="closeLetter">×</button></view><scroll-view scroll-y class="letter-scroll"><view class="letter-stamp">FOR 宝宝 · WITH LOVE</view><view wx:for="{{shop.letter}}" wx:key="*this" class="letter-paragraph">{{item}}</view><view class="letter-signature"><view>永远向你营业的店长</view><view>和你的小狗 {{shop.puppy}} 🐾</view></view></scroll-view><button class="primary-button" bindtap="closeLetter">收好这封信，进店看看</button></view></view>
+<view wx:if="{{showPhoto}}" class="overlay" bindtap="closePhoto"><view class="sheet photo-sheet" catchtap="noop"><view class="sheet-grip"></view><view class="sheet-head"><view class="sheet-title">小狗珍藏的我们 ♡</view><button class="close-button" bindtap="closePhoto">×</button></view>
+  <view class="photo-frame"><swiper wx:if="{{photoItems.length}}" class="photo-swiper" current="{{photoIndex}}" autoplay="{{showPhoto && photoPlaying && photoItems.length > 1}}" circular="{{photoItems.length > 1}}" interval="4000" duration="500" bindchange="onPhotoChange"><swiper-item wx:for="{{photoItems}}" wx:key="id"><image wx:if="{{item.filePath}}" class="couple-photo" src="{{item.filePath}}" mode="aspectFit" data-index="{{index}}" bindtap="previewPhoto"/><view wx:else class="photo-empty"><text class="photo-heart">✉</text><view>这一张暂时没打开</view><button class="section-link" bindtap="openPhoto">重新加载 →</button></view></swiper-item></swiper><view wx:else class="photo-empty"><text class="photo-heart">{{photoLoading ? '🐾' : '♡'}}</text><view>{{photoLoading ? '小狗正在翻出我们的小相册…' : (photoError || '这里，想慢慢收满我们的合照。')}}</view><button wx:if="{{photoError && paired}}" class="section-link" bindtap="openPhoto">重新打开 →</button></view></view>
+  <view wx:if="{{photoItems.length}}" class="photo-player"><text>{{photoIndex + 1}} / {{photoItems.length}}</text><text class="photo-swipe-hint">左右滑动 · 点照片放大</text><button bindtap="togglePhotoPlaying" disabled="{{photoItems.length < 2}}">{{photoPlaying ? 'Ⅱ 暂停' : '▷ 播放'}}</button></view><view class="photo-caption">{{photoItems.length ? (photoItems[photoIndex].caption || '照片里是我们，照片外也一直是我们。') : '在“我们”里放好合照，两个人都能点开。'}}</view><button class="primary-button" bindtap="closePhoto">{{photoItems.length ? '把我们好好收在心里' : '先把这个位置留给我们'}}</button><button class="photo-settings" bindtap="goPhotoSettings">{{photoItems.length ? '去“我们”整理小相册 →' : '去放我们的合照 →'}}</button></view></view>

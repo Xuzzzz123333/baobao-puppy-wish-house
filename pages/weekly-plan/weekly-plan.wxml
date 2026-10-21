@@ -1,0 +1,79 @@
+<view class="page weekly-page" style="padding-top: {{safeTop}}px">
+  <view class="weekly-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">WEEKLY TABLE</view>
+      <view class="page-title">每周菜单</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="week-switcher">
+    <view class="week-arrow" data-delta="-1" bindtap="shiftWeek">←</view>
+    <view>
+      <view class="week-label">本周安排</view>
+      <view class="week-title">{{weekTitle}}</view>
+    </view>
+    <view class="week-arrow" data-delta="1" bindtap="shiftWeek">→</view>
+  </view>
+
+  <view class="weekly-tip">点开某一天，把大厨菜单安排进去；双方都会看到同一份周计划。</view>
+  <view class="loading" wx:if="{{loading}}">正在翻开本周菜单…</view>
+
+  <view class="day-list" wx:else>
+    <view
+      wx:for="{{days}}"
+      wx:key="date"
+      class="day-card {{item.isToday ? 'today' : ''}}"
+      data-date="{{item.date}}"
+      bindtap="openDay"
+    >
+      <view class="day-date">
+        <view class="day-name">{{item.name}}</view>
+        <view class="day-short">{{item.shortDate}}</view>
+      </view>
+      <view class="day-plan" wx:if="{{item.count}}">
+        <view class="day-icons">{{item.icons}}</view>
+        <view class="day-dishes">{{item.dishNames}}</view>
+      </view>
+      <view class="day-empty" wx:else>还没安排 · 点一下添加</view>
+      <view class="day-count" wx:if="{{item.count}}">{{item.count}} 道</view>
+    </view>
+  </view>
+</view>
+
+<view class="editor-mask" wx:if="{{showEditor}}" bindtap="closeEditor">
+  <view class="editor-panel" catchtap="noop">
+    <view class="editor-head">
+      <view>
+        <view class="editor-eyebrow">PLAN THE DAY</view>
+        <view class="editor-title">{{editorTitle}}</view>
+      </view>
+      <view class="close-button" bindtap="closeEditor">×</view>
+    </view>
+    <view class="editor-note">可多选；全部取消后保存即清空当天安排</view>
+    <scroll-view class="dish-picker" scroll-y>
+      <view
+        wx:for="{{dishes}}"
+        wx:key="id"
+        class="picker-dish {{item.selected ? 'selected' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="toggleDish"
+      >
+        <view class="picker-icon" style="background: {{item.tone}}">
+          <image wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" mode="aspectFill" />
+          <text wx:else>{{item.icon}}</text>
+        </view>
+        <view class="picker-copy">
+          <view class="picker-name">{{item.name}}</view>
+          <view class="picker-sub">{{item.category}} · {{item.time}}</view>
+        </view>
+        <view class="picker-check">{{item.selected ? '✓' : '＋'}}</view>
+      </view>
+    </scroll-view>
+    <view class="save-button" bindtap="saveDay">
+      {{saving ? '正在保存…' : '保存这一天'}}
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

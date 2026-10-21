@@ -1,0 +1,199 @@
+<view class="page shopping-page" style="padding-top: {{safeTop}}px">
+  <view class="shopping-header">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view>
+      <view class="eyebrow">GROCERY TOGETHER</view>
+      <view class="page-title">采购清单</view>
+    </view>
+    <view class="header-space"></view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">正在整理今晚要买的食材…</view>
+
+  <view class="access-card" wx:elif="{{!cloudReady}}">
+    <view class="access-icon">☁</view>
+    <view class="access-title">采购清单需要云开发</view>
+    <view class="access-sub">请先完成云环境配置并部署 shoppingListManager 云函数。</view>
+  </view>
+
+  <view class="access-card" wx:elif="{{!paired}}">
+    <view class="access-icon">♡</view>
+    <view class="access-title">先绑定另一半</view>
+    <view class="access-sub">采购清单由两个人共享，完成情侣绑定后即可使用。</view>
+  </view>
+
+  <block wx:else>
+    <view class="empty-card" wx:if="{{!list}}">
+      <view class="empty-icon">🧺</view>
+      <view class="empty-title">还没有采购清单</view>
+      <view class="empty-sub">确认一份今晚菜单后会自动生成，也可以从最近订单开始。</view>
+      <view class="empty-action" bindtap="generateFromOrder">从最近订单生成</view>
+    </view>
+
+    <block wx:else>
+      <view class="progress-card">
+        <view class="progress-top">
+          <view>
+            <view class="progress-label">{{list.title}}</view>
+            <view class="progress-count">{{completedCount}} / {{totalCount}} <text>已准备</text></view>
+          </view>
+          <view class="progress-percent">{{progress}}%</view>
+        </view>
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{progress}}%"></view>
+        </view>
+        <view class="progress-bottom">
+          <text>{{pendingCount ? '还差 ' + pendingCount + ' 样' : '今晚食材已经准备齐啦'}}</text>
+          <text>{{updatedText}}</text>
+        </view>
+      </view>
+
+      <view class="missing-tip" wx:if="{{missingText}}">
+        <text>!</text>
+        <view>
+          <view>{{missingText}}</view>
+          <view class="missing-sub">请让大厨到菜单管理补充，或手动添加所需食材。</view>
+        </view>
+      </view>
+
+      <view class="toolbar">
+        <view class="toolbar-button primary" bindtap="openAdd">＋ 手动添加</view>
+        <view class="toolbar-button" bindtap="generateFromOrder">↻ 同步订单</view>
+      </view>
+
+      <view class="filter-row">
+        <view class="filter-toggle {{hideCompleted ? 'active' : ''}}" bindtap="toggleHideCompleted">
+          {{hideCompleted ? '显示全部' : '隐藏已完成'}}
+        </view>
+        <view class="buy-all" wx:if="{{pendingCount}}" bindtap="markAllPurchased">全部买齐</view>
+      </view>
+
+      <view class="section" wx:for="{{sections}}" wx:key="category">
+        <view class="section-head">
+          <view class="section-title">{{item.category}}</view>
+          <view class="section-count">{{item.items.length}} 样</view>
+        </view>
+        <view class="item-list">
+          <view
+            class="shopping-item state-{{ingredient.state}}"
+            wx:for="{{item.items}}"
+            wx:key="id"
+            wx:for-item="ingredient"
+          >
+            <view
+              class="check-circle"
+              data-id="{{ingredient.id}}"
+              bindtap="togglePurchased"
+            >{{ingredient.state === 'purchased' ? '✓' : ''}}</view>
+            <view class="item-copy">
+              <view class="item-name-line">
+                <text class="item-name">{{ingredient.name}}</text>
+                <text class="optional-chip" wx:if="{{ingredient.optional}}">可选</text>
+                <text class="manual-chip" wx:if="{{ingredient.source === 'manual'}}">手动</text>
+              </view>
+              <view class="item-meta">{{ingredient.quantityText}} · {{ingredient.sourceText}}</view>
+              <view class="item-note" wx:if="{{ingredient.note}}">{{ingredient.note}}</view>
+            </view>
+            <view class="item-actions">
+              <view
+                class="pantry-action {{ingredient.state === 'pantry' ? 'active' : ''}}"
+                data-id="{{ingredient.id}}"
+                bindtap="togglePantry"
+              >{{ingredient.state === 'pantry' ? '已有' : '家里有'}}</view>
+              <view class="more-actions">
+                <text data-id="{{ingredient.id}}" bindtap="openEdit">编辑</text>
+                <text class="delete-action" data-id="{{ingredient.id}}" bindtap="deleteItem">删除</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="filtered-empty" wx:if="{{hideCompleted && !sections.length}}">
+        当前没有待购买食材，点击“显示全部”查看完整清单。
+      </view>
+
+      <view class="clear-list" bindtap="clearList">清空这份采购清单</view>
+    </block>
+  </block>
+</view>
+
+<view class="editor-mask" wx:if="{{showEditor}}" bindtap="closeEditor">
+  <view class="editor-panel" catchtap="noop">
+    <view class="editor-head">
+      <view>
+        <view class="editor-eyebrow">GROCERY ITEM</view>
+        <view class="editor-title">{{editingId ? '编辑食材' : '手动添加食材'}}</view>
+      </view>
+      <view class="close-button" bindtap="closeEditor">×</view>
+    </view>
+
+    <view class="field-label">食材名称</view>
+    <input
+      class="field-input {{editingGenerated ? 'readonly' : ''}}"
+      placeholder="例如：牛奶"
+      maxlength="24"
+      disabled="{{editingGenerated}}"
+      value="{{form.name}}"
+      data-field="name"
+      bindinput="onFormInput"
+    />
+
+    <view class="field-row">
+      <view class="field-half">
+        <view class="field-label">数量</view>
+        <input
+          class="field-input"
+          type="digit"
+          placeholder="{{form.unit === '适量' ? '无需数量' : '数量'}}"
+          disabled="{{form.unit === '适量'}}"
+          value="{{form.quantity}}"
+          data-field="quantity"
+          bindinput="onFormInput"
+        />
+      </view>
+      <view class="field-half">
+        <view class="field-label">单位</view>
+        <picker
+          range="{{units}}"
+          disabled="{{editingGenerated}}"
+          bindchange="onUnitChange"
+        >
+          <view class="field-input picker-input {{editingGenerated ? 'readonly' : ''}}">
+            {{form.unit}}⌄
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="field-label">分类</view>
+    <picker
+      range="{{categories}}"
+      disabled="{{editingGenerated}}"
+      bindchange="onCategoryChange"
+    >
+      <view class="field-input picker-input {{editingGenerated ? 'readonly' : ''}}">
+        {{form.category}}⌄
+      </view>
+    </picker>
+
+    <view class="field-label">备注</view>
+    <input
+      class="field-input"
+      placeholder="选填，例如：买熟一点"
+      maxlength="40"
+      value="{{form.note}}"
+      data-field="note"
+      bindinput="onFormInput"
+    />
+
+    <view class="generated-note" wx:if="{{editingGenerated}}">
+      自动生成项可修改数量和备注；名称、单位及分类由菜品食材决定。
+    </view>
+
+    <view class="save-button {{saving ? 'disabled' : ''}}" bindtap="saveItem">
+      {{saving ? '正在保存…' : '保存到共享清单'}}
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

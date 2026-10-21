@@ -1,0 +1,19 @@
+<view class="page daily-page" style="padding-top: {{safeTop}}px"><demo-panel/>
+  <inbox-banner/>
+  <view class="daily-header"><button class="daily-back" bindtap="goBack">←</button><text class="eyebrow">A LITTLE CLOSER, EVERY DAY</text></view>
+  <view class="page-title">今日心动小实验</view><view class="page-sub">{{card.day}} · 每天一点点，再靠近你一点。</view>
+  <view class="tiny-note">{{card.pool.actions}} 个行动 · {{card.pool.questions}} 个问题，按天打乱轮换。</view>
+  <view class="blind-card"><view class="daily-kicker">01 / 今日心动盲盒</view>
+    <block wx:if="{{!opened}}"><view class="blind-gift">🎁<text>♡</text></view><view class="blind-title">小狗藏好了一件小幸福</view><view class="blind-copy">不用安排一整天，一件小事也能让我们靠近。</view><button class="primary-button" bindtap="draw">拆开今天的心动</button></block>
+    <block wx:else><view class="draw-icon">{{card.action.icon}}</view><view class="blind-title">{{card.action.title}}</view><view class="blind-copy">{{card.action.text}}</view><button class="primary-button" bindtap="makeWish">把它变成一个心愿 →</button><view class="tiny-note">每天换一个小灵感，你们可以慢慢商量。</view></block>
+  </view>
+  <view class="secret-card paper-card"><view class="daily-kicker">02 / 双向小秘密 · {{card.questionTheme || '慢慢了解你'}}</view><view class="secret-title">{{card.question}}</view><view class="secret-copy">各写一份答案，两个人都写完，信封才一起打开。</view>
+    <view wx:if="{{error}}" class="daily-error" bindtap="load">{{error}} · 点击重试</view><view wx:if="{{loading}}" class="tiny-note">小狗正在查看今天的信封…</view>
+    <block wx:if="{{daily}}"><view class="envelope-row"><view class="envelope {{daily.mySubmitted ? 'sealed' : ''}}"><text>{{daily.mySubmitted ? '💌' : '✉'}}</text><view>我的信封</view><view class="envelope-status">{{daily.mySubmitted ? '已经封好' : '等一句真心话'}}</view></view><text class="envelope-heart">♡</text><view class="envelope {{daily.partnerSubmitted ? 'sealed' : ''}}"><text>{{daily.partnerSubmitted ? '💌' : '✉'}}</text><view>{{partnerName}}的信封</view><view class="envelope-status">{{daily.partnerSubmitted ? '已经封好' : '还在等 Ta 写'}}</view></view></view>
+      <view wx:if="{{daily.mySubmitted}}" class="answer-paper"><view class="answer-author">我写下的</view><view class="answer-text">{{daily.myAnswer}}</view></view>
+      <view wx:if="{{daily.revealed}}" class="answer-paper partner-answer"><view class="answer-author">{{partnerName}} 写下的 ♡</view><view class="answer-text">{{daily.partnerAnswer}}</view><view class="tiny-note">原来，这一天我们是这样想念彼此的。</view></view>
+      <block wx:elif="{{!daily.mySubmitted}}"><textarea class="note-input secret-input" value="{{answer}}" bindinput="onAnswer" maxlength="300" disabled="{{busy || !paired}}" placeholder="写完封好，等两颗真心一起打开。" adjust-position="{{true}}" cursor-spacing="24"/><view class="input-counter">{{answer.length}} / 300</view><view class="tiny-note">封好后，今天的答案就不修改啦。</view><button class="primary-button" bindtap="submit" loading="{{busy}}" disabled="{{busy || loading}}">{{paired ? '把我的答案封好' : '先牵手，或进入单账号演示'}}</button></block>
+      <view wx:else class="waiting-note">{{demoMode ? '点顶部“切换身份”，替另一个演示身份写完，就能体验揭晓。' : '你的信封已经封好。等 Ta 写完，再进来或刷新看看。'}}</view>
+    </block><button class="daily-refresh" bindtap="load" disabled="{{loading || busy}}">刷新今天的信封 ↻</button>
+  </view><view class="daily-footnote">按北京时间每天换题，喜欢的答案可以一起截图收藏。</view>
+</view>
