@@ -13,6 +13,8 @@ project.private.config.json
 # Local cloud and subscription-message credentials.
 config/cloud.private.js
 config/notifications.private.js
+config/release.private.js
+cloudfunctions/puppyWishes/subscription.private.js
 cloudfunctions/notifyPartnerOrder/config.private.js
 .env
 .env.*
@@ -24,3 +26,9 @@ preview-info.json
 preview.html
 preview.png
 wechat-*.png
+
+# Local tooling, reports and downloaded binaries.
+.tools/
+coverage/
+test-results/
+*.zip
