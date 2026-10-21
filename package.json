@@ -1,0 +1,17 @@
+{
+  "name": "baobao-puppy-wish-house",
+  "version": "1.0.1",
+  "private": true,
+  "description": "A two-person WeChat mini program for wishes, daily rituals and shared memories",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "test": "node scripts/test.js",
+    "verify": "node scripts/sync-interactions.js --check && node scripts/verify-ui.js && node scripts/verify-public.js",
+    "verify:native": "node scripts/verify-ui.js --native",
+    "verify:trial": "node scripts/verify-release.js --target=trial",
+    "verify:release": "node scripts/verify-release.js --target=formal",
+    "sync": "node scripts/sync-interactions.js"
+  }
+}

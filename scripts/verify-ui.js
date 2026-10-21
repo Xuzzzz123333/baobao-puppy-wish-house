@@ -27,12 +27,21 @@ for (const file of syntaxPaths) {
   const result = spawnSync(process.execPath,['--check',file],{ cwd:root,encoding:'utf8' })
   assert.equal(result.status,0,file + ': ' + result.stderr)
 }
-const binaries = path.join('D:/微信web开发者工具/resources/app.asar.unpacked/node_modules/wcc-exec')
-for (const [name,args] of [['wcc.exe',['-d',...wxmlFiles]],['wcsc.exe',['-lc',...wxssFiles]]]) {
-  const result = spawnSync(path.join(binaries,name),args,{ cwd:root,encoding:'utf8',maxBuffer:16 * 1024 * 1024 })
-  assert.equal(result.status,0,name + ': ' + result.stderr + '\n' + result.stdout.slice(0,3500))
+const args = process.argv.slice(2)
+assert.ok(args.length === 0 || (args.length === 1 && args[0] === '--native'),'Usage: node scripts/verify-ui.js [--native]')
+let nativeCompiler = 'not run (use --native with WCC_EXEC_DIR)'
+if (args.length) {
+  const binaries = process.env.WCC_EXEC_DIR
+  assert.ok(binaries,'Set WCC_EXEC_DIR to Developer Tools resources/app.asar.unpacked/node_modules/wcc-exec')
+  const suffix = process.platform === 'win32' ? '.exe' : ''
+  for (const [name,compilerArgs] of [['wcc',['-d',...wxmlFiles]],['wcsc',['-lc',...wxssFiles]]]) {
+    const result = spawnSync(path.join(binaries,name + suffix),compilerArgs,{ cwd:root,encoding:'utf8',maxBuffer:16 * 1024 * 1024 })
+    assert.equal(result.status,0,name + ': ' + (result.error || result.stderr) + '\n' + (result.stdout || '').slice(0,3500))
+  }
+  nativeCompiler = 'pass'
 }
-const project = JSON.parse(fs.readFileSync(path.join(root,'project.config.json'),'utf8'))
+const projectFile = fs.existsSync(path.join(root,'project.config.json')) ? 'project.config.json' : 'project.config.example.json'
+const project = JSON.parse(fs.readFileSync(path.join(root,projectFile),'utf8'))
 const ignored = project.packOptions.ignore
 function packedSize(dir) {
   let size = 0
@@ -46,4 +55,4 @@ function packedSize(dir) {
 }
 const bytes = packedSize(root)
 assert.ok(bytes < 2 * 1024 * 1024,'main package estimate exceeds 2 MiB')
-console.log(JSON.stringify({ pages:config.pages.length, templates:wxmlFiles.length, syntaxFiles:syntaxPaths.length, nativeWxmlCompiler:'pass',nativeWxssCompiler:'pass',estimatedPackageBytes:bytes },null,2))
+console.log(JSON.stringify({ pages:config.pages.length,templates:wxmlFiles.length,syntaxFiles:syntaxPaths.length,nativeCompiler,projectFile,estimatedPackageBytes:bytes },null,2))
